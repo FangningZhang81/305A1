@@ -1,0 +1,265 @@
+---
+title: "STA305 Assignment1"
+author: "Fangning Zhang"
+date: today
+header-includes:
+spacing: double
+output:
+  pdf_document:
+    number_sections: yes
+  html_document:
+    number_sections: yes
+  word_document: default
+always_allow_html: true
+citation_package: natbib
+#bibliography: ["research sources.bib"]     
+biblio-style: "apalike"
+link-citations: true
+nocite: | 
+  @SIRcode, @FB, @OB, @Article,@Code, @MKMK
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+```
+
+
+# Q1
+
+**(a)**
+
+$$
+\left[\begin{array}{l}
+y_1 \\ 
+y_2 \\ 
+y_3 \\ 
+y_4 \\ 
+y_5 \\ 
+y_6 \\ 
+y_7 \\ 
+y_8
+\end{array}\right]
+=
+\left[\begin{array}{lllllll}
+1 & 1 & 1 & 1 & 1 & 1 & 1 \\ 
+1 & 1 & 1 & 0 & 0 & 0 & 0 \\ 
+1 & 0 & 0 & 1 & 1 & 0 & 0 \\ 
+1 & 0 & 0 & 0 & 0 & 1 & 1 \\ 
+0 & 1 & 0 & 1 & 0 & 1 & 0 \\ 
+0 & 1 & 0 & 0 & 1 & 0 & 1 \\ 
+0 & 0 & 1 & 1 & 0 & 0 & 1 \\ 
+0 & 0 & 1 & 0 & 1 & 1 & 0
+\end{array}\right]
+\left[\begin{array}{c}
+\beta_1 \\ 
+\beta_2 \\ 
+\beta_3 \\ 
+\beta_4 \\ 
+\beta_5 \\ 
+\beta_6 \\ 
+\beta_7
+\end{array}\right]
++
+\left[\begin{array}{c}
+\varepsilon_1 \\ 
+\varepsilon_2 \\ 
+\vdots \\ 
+\varepsilon_8
+\end{array}\right]
+$$
+$$
+\left[\begin{array}{l}
+y_1 \\ 
+y_2 \\ 
+y_3 \\ 
+y_4 \\ 
+y_5 \\ 
+y_6 \\ 
+y_7 \\ 
+y_8
+\end{array}\right]
+= \mathbf{y},\quad
+\left[\begin{array}{c}
+\beta_1 \\ 
+\beta_2 \\ 
+\beta_3 \\ 
+\beta_4 \\ 
+\beta_5 \\ 
+\beta_6 \\ 
+\beta_7
+\end{array}\right]
+= \boldsymbol{\beta},\quad
+\left[\begin{array}{c}
+\varepsilon_1 \\ 
+\varepsilon_2 \\ 
+\vdots \\ 
+\varepsilon_8
+\end{array}\right]
+= \boldsymbol{\varepsilon}
+$$
+$$
+\hat{\boldsymbol{\beta}}=\left(X^{\top} X\right)^{-1} X^{\top} \mathbf{y}
+$$
+
+```{r}
+X <- matrix(c(
+  1,1,1,1,1,1,1,
+  1,1,1,0,0,0,0,
+  1,0,0,1,1,0,0,
+  1,0,0,0,0,1,1,
+  0,1,0,1,0,1,0,
+  0,1,0,0,1,0,1,
+  0,0,1,1,0,0,1,
+  0,0,1,0,1,1,0
+), nrow = 8, byrow = TRUE)
+solve(t(X) %*% X) %*% t(X)
+```
+$$
+\hat{\boldsymbol{\beta}} = \frac{1}{16}
+\begin{bmatrix}
+y_1 + 5y_2 + 5y_3 + 5y_4 - 3y_5 - 3y_6 - 3y_7 - 3y_8 \\
+y_1 + 5y_2 - 3y_3 - 3y_4 + 5y_5 + 5y_6 - 3y_7 - 3y_8 \\
+y_1 + 5y_2 - 3y_3 - 3y_4 - 3y_5 - 3y_6 + 5y_7 + 5y_8 \\
+y_1 - 3y_2 + 5y_3 - 3y_4 + 5y_5 - 3y_6 + 5y_7 - 3y_8 \\
+y_1 - 3y_2 + 5y_3 - 3y_4 - 3y_5 + 5y_6 - 3y_7 + 5y_8 \\
+y_1 - 3y_2 - 3y_3 + 5y_4 + 5y_5 - 3y_6 - 3y_7 + 5y_8 \\
+y_1 - 3y_2 - 3y_3 + 5y_4 - 3y_5 + 5y_6 + 5y_7 - 3y_8
+\end{bmatrix}
+
+$$
+$$
+\begin{aligned}
+& \hat{\beta}_1=\frac{1}{16} y_1+\frac{5}{16} y_2+\frac{5}{16} y_3+\frac{5}{16} y_4-\frac{3}{16} y_5-\frac{3}{16} y_6-\frac{3}{16} y_7-\frac{3}{16} y_8 \\
+& \hat{\beta}_2=\frac{1}{16} y_1+\frac{5}{16} y_2-\frac{3}{16} y_3-\frac{3}{16} y_4+\frac{5}{16} y_5+\frac{5}{16} y_6-\frac{3}{16} y_7-\frac{3}{16} y_8\\
+& \hat{\beta}_3=\frac{1}{16} y_1+\frac{5}{16} y_2-\frac{3}{16} y_3-\frac{3}{16} y_4-\frac{3}{16} y_5-\frac{3}{16} y_6+\frac{5}{16} y_7+\frac{5}{16} y_8\\
+& \hat{\beta}_4=\frac{1}{16} y_1-\frac{3}{16} y_2+\frac{5}{16} y_3-\frac{3}{16} y_4+\frac{5}{16} y_5-\frac{3}{16} y_6+\frac{5}{16} y_7-\frac{3}{16} y_8 \\
+& \hat{\beta}_5=\frac{1}{16} y_1-\frac{3}{16} y_2+\frac{5}{16} y_3-\frac{3}{16} y_4-\frac{3}{16} y_5+\frac{5}{16} y_6-\frac{3}{16} y_7+\frac{5}{16} y_8 \\
+& \hat{\beta}_6=\frac{1}{16} y_1-\frac{3}{16} y_2-\frac{3}{16} y_3+\frac{5}{16} y_4+\frac{5}{16} y_5-\frac{3}{16} y_6-\frac{3}{16} y_7+\frac{5}{16} y_8 \\
+& \hat{\beta}_7=\frac{1}{16} y_1-\frac{3}{16} y_2-\frac{3}{16} y_3+\frac{5}{16} y_4-\frac{3}{16} y_5+\frac{5}{16} y_6+\frac{5}{16} y_7-\frac{3}{16} y_8 
+\end{aligned}
+$$
+
+**(b)**
+
+$$
+\left[\begin{array}{l}
+y_1 \\ 
+y_2 \\ 
+y_3 \\ 
+y_4 \\ 
+y_5 \\ 
+y_6 \\ 
+y_7 \\ 
+y_8
+\end{array}\right]
+=
+\left[\begin{array}{rrrrrrr}
+1 &  1 &  1 &  1 &  1 &  1 &  1 \\
+1 &  1 &  1 & -1 & -1 & -1 & -1 \\
+1 & -1 & -1 &  1 &  1 & -1 & -1 \\
+1 & -1 & -1 & -1 & -1 &  1 &  1 \\
+-1 &  1 & -1 &  1 & -1 &  1 & -1 \\
+-1 &  1 & -1 & -1 &  1 & -1 &  1 \\
+-1 & -1 &  1 &  1 & -1 & -1 &  1 \\
+-1 & -1 &  1 & -1 &  1 &  1 & -1
+\end{array}\right]
+\left[\begin{array}{c}
+\beta_1 \\ 
+\beta_2 \\ 
+\beta_3 \\ 
+\beta_4 \\ 
+\beta_5 \\ 
+\beta_6 \\ 
+\beta_7
+\end{array}\right]
++
+\left[\begin{array}{c}
+\varepsilon_1 \\ 
+\varepsilon_2 \\ 
+\vdots \\ 
+\varepsilon_8
+\end{array}\right]
+$$
+$$
+\hat{\boldsymbol{\beta}}=\left(X_H^{\top} X_H\right)^{-1} X^{\top}_H \mathbf{y}
+$$
+```{r}
+X_H <- matrix(c(
+   1, 1, 1, 1, 1, 1, 1,
+   1, 1, 1,-1,-1,-1,-1,
+   1,-1,-1, 1, 1,-1,-1,
+   1,-1,-1,-1,-1, 1, 1,
+  -1, 1,-1, 1,-1, 1,-1,
+  -1, 1,-1,-1, 1,-1, 1,
+  -1,-1, 1, 1,-1,-1, 1,
+  -1,-1, 1,-1, 1, 1,-1
+), nrow = 8, byrow = TRUE)
+solve( t(X_H) %*% X_H ) %*% t(X_H)
+```
+$$
+\hat{\boldsymbol{\beta}} = \frac{1}{8}
+\begin{bmatrix}
+y_1 + y_2 + y_3 + y_4 - y_5 - y_6 - y_7 - y_8 \\
+y_1 + y_2 - y_3 - y_4 + y_5 + y_6 - y_7 - y_8 \\
+y_1 + y_2 - y_3 - y_4 - y_5 - y_6 + y_7 + y_8 \\
+y_1 - y_2 + y_3 - y_4 + y_5 - y_6 + y_7 - y_8 \\
+y_1 - y_2 + y_3 - y_4 - y_5 + y_6 - y_7 + y_8 \\
+y_1 - y_2 - y_3 + y_4 + y_5 - y_6 - y_7 + y_8 \\
+y_1 - y_2 - y_3 + y_4 - y_5 + y_6 + y_7 - y_8
+\end{bmatrix}
+$$
+
+$$
+\begin{aligned}
+& \hat{\beta}_1=\frac{1}{8}\left(y_1+y_2+y_3+y_4-y_5-y_6-y_7-y_8\right) \\
+& \hat{\beta}_2=\frac{1}{8}\left(y_1+y_2-y_3-y_4+y_5+y_6-y_7-y_8\right) \\
+& \hat{\beta}_3=\frac{1}{8}\left(y_1+y_2-y_3-y_4-y_5-y_6+y_7+y_8\right) \\
+& \hat{\beta}_4=\frac{1}{8}\left(y_1-y_2+y_3-y_4+y_5-y_6+y_7-y_8\right) \\
+& \hat{\beta}_5=\frac{1}{8}\left(y_1-y_2+y_3-y_4-y_5+y_6-y_7+y_8\right) \\
+& \hat{\beta}_6=\frac{1}{8}\left(y_1-y_2-y_3+y_4+y_5-y_6-y_7+y_8\right) \\
+& \hat{\beta}_7=\frac{1}{8}\left(y_1-y_2-y_3+y_4-y_5+y_6+y_7-y_8\right)
+\end{aligned}
+$$
+
+**(c)**
+For all seven $\hat{\beta}$ have the same pattern of coefficients, just in a different order. We use $\hat{\beta}_1$ to calculate.
+Yates' procedure:
+
+$$
+\hat{\beta}_1=\frac{1}{16} y_1+\frac{5}{16}\left(y_2+y_3+y_4\right)-\frac{3}{16}\left(y_5+y_6+y_7+y_8\right) \text {. }
+$$
+$$
+\left(\frac{1}{16}\right)^2+3\left(\frac{5}{16}\right)^2+4\left(\frac{3}{16}\right)^2=\frac{1+75+36}{256}=\frac{112}{256}=\frac{7}{16} 
+$$
+Therefore, the variance of a weight using Yates' is
+$$
+\operatorname{Var}\left(\hat{\beta}_i\right)=\frac{7}{16} \sigma^2
+$$
+
+Hotelling's procedure:
+
+$$
+\hat{\beta}_1=\frac{1}{8}\left(y_1+y_2+y_3+y_4-y_5-y_6-y_7-y_8\right)
+$$
+
+
+$$
+8\left(\frac{1}{8}\right)^2= \frac{8}{64}=\frac{1}{8}
+$$
+Therefore, the variance of a weight using Hotelling's procedure is
+$$
+\operatorname{Var}\left(\hat{\beta}_i\right)=\frac{1}{8} \sigma^2
+$$
+
+**(d)**
+
+Use Hotelling's procedure for estimating the weights with the highest precision. From (c), we know the variance for both Yates' procedure and Hotelling's procedure. Hotelling's method provides more precise estimates due to its smaller variance. Besides, both methods use same weighings, but Hotelling's approach achieves higher precision by strategically placing objects in the opposite pan (symmetry optimization).No extra experimental effort is needed.
+
+
